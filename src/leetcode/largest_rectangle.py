@@ -39,7 +39,7 @@ class Solution:
         partitions.append([0, len(height)])
         while partitions:
             (lo, hi) = partitions.pop()
-            width          = hi - lo
+            width    = hi - lo
             if  width == 1:
                 maxarea = max(maxarea, height[lo])
             elif width > 1:

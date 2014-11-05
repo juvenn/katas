@@ -92,5 +92,11 @@ class PartitionByMinTestCase(unittest.TestCase):
         self.assertEqual(minv, 4)
         self.assertEqual(parts, [])
 
+    def test_partition_many(self):
+        vals = [7, 3, 8, 3, 4, 3, 7, 6, 3, 10]
+        (minv, parts) = self.solution.partitionByMin(vals, 0, 10)
+        self.assertEqual(minv, 3)
+        self.assertEqual(parts, [[0, 1], [2, 3], [4, 5], [6, 8], [9, 10]])
+
 if __name__ == '__main__':
     unittest.main()
