@@ -62,3 +62,32 @@
          ))
   )
 
+(deftest test-encode-space
+  ^{:qn "1.5"}
+  (testing "it should return itself for string without space"
+    (are [s] (= s (ctci/encode-space s))
+         ""
+         "h"
+         "he"
+         "hel"
+         "hell"
+         "hello"))
+  (testing "it should replace all spaces with '%20'"
+    (are [s1 s2] (= s2 (ctci/encode-space s1))
+         " " "%20"
+         "a " "a%20"
+         "a b" "a%20b"
+         "a b " "a%20b%20"
+         "a  b" "a%20%20b"
+         "a b c " "a%20b%20c%20"
+         )))
+
+(deftest test-rotate-matrix
+  ^{:qn "1.6"}
+  (testing "it should handle small matrix"
+    (are [m1 m2] (= m2 (ctci/rotate-matrix m1))
+         [[:a]] [[:a]]
+         [[:a :b] [:c :d]] [[:c :a][:d :b]]
+         [[:a :b :c] [:d :e :f] [:g :h :i]]
+         [[:g :d :a] [:h :e :b] [:i :f :c]]))
+  (testing ""))
