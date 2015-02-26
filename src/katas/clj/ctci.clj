@@ -27,7 +27,7 @@
 
 (defn remove-duplicate
   "Remove dulicate characters in a string."
-  ^{:an "1.3"}
+  ^{:qn "1.3"}
   [s]
   (loop [chars  s
          res    []
@@ -41,8 +41,20 @@
 
 (defn anagrams?
   "Are two strings anagrams?"
-  ^{:an "1.4"}
+  ^{:qn "1.4"}
   [s1 s2]
   (if (= (count s1) (count s2))
     (= s1 (reverse-str s2))
     false))
+
+(defn encode-space
+  "Encode space as '%20' in a string."
+  ^{:qn "1.5"}
+  [s]
+  (apply str (map #(if (= \space %) "%20" %) s)))
+
+(defn rotate-matrix
+  "Rotate matrix 90 degrees clockwise."
+  ^{:qn "1.6"}
+  [m]
+  (apply map (fn [& more] (reverse (vec more))) m))
