@@ -90,4 +90,35 @@
          [[:a :b] [:c :d]] [[:c :a][:d :b]]
          [[:a :b :c] [:d :e :f] [:g :h :i]]
          [[:g :d :a] [:h :e :b] [:i :f :c]]))
-  (testing ""))
+  (testing "rotating 4 times should return to original"
+    (are [m] (= m (-> m
+                      ctci/rotate-matrix
+                      ctci/rotate-matrix
+                      ctci/rotate-matrix
+                      ctci/rotate-matrix))
+         [[:a]]
+         [[:a :b] [:c :d]]
+         [[:a :b :c] [:d :e :f] [:g :h :i]]
+         )))
+
+(deftest test-zeroify-matrix
+  ^{:qn "1.7"}
+  (testing "it should handle small matrix"
+    (are [m1 m2] (= m2 (ctci/zeroify-matrix m1))
+         [[:a]] [[:a]]
+         [[:a 0] [:c :d]] [[0 0] [:c 0]]
+         [[:a :b :c] [:d 0 :f] [:g :h :i]]
+         [[:a 0 :c]  [0 0 0]   [:g 0 :i]]
+         ))
+  (testing "it should preserve dimensions"
+    (are [m] (let [r (count m)
+                   c (count (first m))
+                   m2 (ctci/zeroify-matrix m)
+                   r2 (count m2)
+                   c2 (count (first m2))]
+               (and (= r r2) (= c c2)))
+         [[:a]]
+         [[:a 0] [:c :d]]
+         [[:a 0 2 3 4] [:c :d 2 3 4]]
+         [[:a 0] [:c :d] [:b 0] [1 2] [3 4]]
+         )))

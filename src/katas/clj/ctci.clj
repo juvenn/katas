@@ -58,3 +58,22 @@
   ^{:qn "1.6"}
   [m]
   (apply map (fn [& more] (reverse (vec more))) m))
+
+(defn zeroify-matrix
+  "For every zero entry in matrix m, set entire row and column to 0"
+  ^{:qn "1.7"}
+  [m]
+  (let [cols (count (first m))
+        v (flatten m)
+        zero-entries (->> v (map-indexed vector)
+                          (filter #(= 0 (second %1)))
+                          (map (fn [[i _]]
+                                 [(quot i cols) (rem i cols)])))
+        zero-rows (set (map first zero-entries))
+        zero-cols (set (map second zero-entries))
+        to-zero? #(or (contains? zero-rows (quot %1 cols))
+                      (contains? zero-cols (rem  %1 cols)))]
+    (->> v
+         (map-indexed #(if (to-zero? %1) 0
+                         %2))
+         (partition cols))))
