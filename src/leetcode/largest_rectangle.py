@@ -5,7 +5,32 @@ class Solution:
     # @param height, a list of integers
     # @return an integer
     def largestRectangle(self, height):
-        return self.largestByPartition(height)
+        return self.largestByStack(height)
+
+    # Push array indices into stack, and pop them when value is less
+    # than the previous one, compute the area by indice width.
+    def largestByStack(self, height):
+        st      = []
+        maxarea = 0
+        for k,v in enumerate(height):
+            decrease = False
+            if st: hi = st[-1]
+            while st and v <= height[hi]:
+                decrease = True
+                hi = st.pop()
+            if decrease: 
+                width = k - hi if st else k + 1
+                maxarea = max(v * width, maxarea)
+            st.append(k)
+
+        # now the stack consists of an increasing number sequence if it's
+        # not empty
+        if st: hi = st[-1]
+        while st:
+            j = st.pop()
+            width = hi - j + 1
+            maxarea = max(width * height[j], maxarea)
+        return maxarea
 
     # Given array vals, partition it from lo to hi (exclusive)
     # @return a tuple of (minv, partitions)
@@ -33,6 +58,8 @@ class Solution:
         return (minv, parts)
 
 
+    # divide the array into partitions separated by min values, and
+    # compute minimum area of sub partitions recursively.
     def largestByPartition(self, height):
         maxarea    = 0
         partitions = []
