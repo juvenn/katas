@@ -77,3 +77,11 @@
          (map-indexed #(if (to-zero? %1) 0
                          %2))
          (partition cols))))
+
+(defn is-rotation?
+  "Test if a string is rotation of the other."
+  ^{:qn "1.8"}
+  [s1 s2]
+  (let [s (str s1 s1)]
+    (if (= (.length s1) (.length s2)) (.contains s s2)
+      false)))

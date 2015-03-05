@@ -122,3 +122,45 @@
          [[:a 0 2 3 4] [:c :d 2 3 4]]
          [[:a 0] [:c :d] [:b 0] [1 2] [3 4]]
          )))
+
+(deftest test-is-rotation?
+  ^{:qn "1.8"}
+  (testing "a string should be a rotation of itself"
+    (are [s] (= true (ctci/is-rotation? s s))
+         ""
+         "h"
+         "he"
+         "hel"
+         "hello "
+         "hello world!"))
+  (testing "some strings are rotation"
+    (are [s1 s2] (= true (ctci/is-rotation? s1 s2))
+         "" ""
+         "h" "h"
+         "he" "eh"
+         "hel" "elh"
+         "elh" "lhe"
+         "lhe" "hel"
+         "hell" "llhe"
+         "hello" "elloh"
+         "elloh" "llohe"))
+  (testing "rotations of a string should be rotation to original"
+    (let [s "abcdefg hijklmn opq rst uvw xyz!"]
+      (loop [head s
+             tail []]
+        (when-not (empty? head)
+          (is (= true (ctci/is-rotation? s (apply str (concat head tail)))))
+          (recur (rest head) (conj tail (first head)))))))
+  (testing "Strings with different length should never be rotation"
+    (are [s1 s2] (= false (ctci/is-rotation? s1 s2))
+         "h" "he"
+         "hel" "hell"
+         "hello" "hell"
+         "hello world" "world hello!"))
+  (testing "same length strings may not be rotation"
+    (are [s1 s2] (= false (ctci/is-rotation? s1 s2))
+         "a" "b"
+         "abc" "bac"
+         "abe" "abc"
+         "hello" "world"))
+  )
