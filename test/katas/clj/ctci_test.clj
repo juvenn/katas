@@ -39,21 +39,21 @@
                     "hellohellohellohello")))
     (is (= "helo" (ctci/remove-duplicate "hello")))))
 
-(deftest test-anagrams?
+(deftest test-anagram?
   ^{:qn "1.4"}
   (testing "two empty strings should return true"
-    (is (= true (ctci/anagrams? "" "")))
+    (is (= true (ctci/anagram? "" "")))
     )
   (testing "strings with different length should return false"
-    (are [s1 s2] (= false (ctci/anagrams? s1 s2))
+    (are [s1 s2] (= false (ctci/anagram? s1 s2))
          "h"     ""
          "he"    "h"
          "hel"   "he"
          "hell"  "hel"
          "hello" "hell"
          ))
-  (testing "string and its reverse should return true"
-    (are [s] (ctci/anagrams? s (apply str (reverse s)))
+  (testing "string and its sort should return true"
+    (are [s] (ctci/anagram? s (apply str (sort s)))
          "h"
          "he"
          "hel"

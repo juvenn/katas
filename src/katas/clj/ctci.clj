@@ -39,13 +39,20 @@
                (if (> cnt 0) res (conj res c))
                (assoc counts c (inc cnt)))))))
 
-(defn anagrams?
-  "Are two strings anagrams?"
+(defn anagram?
+  "Are two strings anagram?
+
+  String A is said to be anagram of string B, if B is a rearranging of
+  characters from A.
+  "
   ^{:qn "1.4"}
   [s1 s2]
-  (if (= (count s1) (count s2))
-    (= s1 (reverse-str s2))
-    false))
+  (if (not= (count s1) (count s2)) false
+    ; key-index counting should be equal
+    (let [incf #(assoc %1 %2 (inc (get %1 %2 0)))]
+      (= (reduce incf {} s1)
+         (reduce incf {} s2)))
+    ))
 
 (defn encode-space
   "Encode space as '%20' in a string."
