@@ -70,20 +70,22 @@
   "For every zero entry in matrix m, set entire row and column to 0"
   ^{:qn "1.7"}
   [m]
-  (let [cols (count (first m))
-        v (flatten m)
-        zero-entries (->> v (map-indexed vector)
-                          (filter #(= 0 (second %1)))
-                          (map (fn [[i _]]
-                                 [(quot i cols) (rem i cols)])))
-        zero-rows (set (map first zero-entries))
-        zero-cols (set (map second zero-entries))
-        to-zero? #(or (contains? zero-rows (quot %1 cols))
-                      (contains? zero-cols (rem  %1 cols)))]
-    (->> v
-         (map-indexed #(if (to-zero? %1) 0
-                         %2))
-         (partition cols))))
+  (let [width (count (first m))
+        vect  (vec (flatten m))
+        marks (reduce-kv (fn [h k v]
+                           (if (not= 0 v) h
+                             (-> h
+                                 (assoc-in [:row (quot k width)] true)
+                                 (assoc-in [:col (rem  k width)] true))))
+                         {:row {}, :col {}} vect)
+        zeroify (fn [k v]
+                  (if (or (get-in marks [:row (quot k width)])
+                          (get-in marks [:col (rem  k width)]))
+                    0
+                    v))]
+    (->> vect
+         (map-indexed zeroify)
+         (partition width))))
 
 (defn is-rotation?
   "Test if a string is rotation of the other."
