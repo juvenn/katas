@@ -43,20 +43,21 @@
                         [1 2 3])
   "
   [klass joinf xs]
-  (let [nodes (map #(clojure.lang.Reflector/invokeConstructor klass (into-array [%])) xs)
+  (let [nodes (map #(clojure.lang.Reflector/invokeConstructor
+                      klass (into-array [%]))
+                   xs)
         head (first nodes)]
-    (when head
-      (reduce #(joinf %1 %2) head (rest nodes)))
-    head)
-  )
+    (when head (reduce #(joinf %1 %2) head (rest nodes)))
+    head))
 
 
-(deftest test-remove-duplicate
+(defn- test-remove-duplicate-f
   ^{:qn 2.1}
+  [removefn]
   (testing "it shall not change a list of all distinct node"
     (are [xs] (= xs (-> (make-linked-list LinkedListNode
                                           #(set! (. %1 next) %2) xs)
-                        (doto CTCI/removeDuplicate)
+                        removefn
                         seq))
          [0]
          [0 1]
@@ -67,7 +68,7 @@
   (testing "it shall remove duplicate items in a list"
     (are [xs xs1] (= xs1 (-> (make-linked-list LinkedListNode
                                                #(set! (. %1 next) %2) xs)
-                             (doto CTCI/removeDuplicate)
+                             removefn
                              seq))
          [] nil
          [1 1] [1]
@@ -76,3 +77,9 @@
          [1 2 1 1 1 1] [1 2]
          [1 2 1 2 1 2 3] [1 2 3]
          [1 2 3 3 2 1 1 2 3 4] [1 2 3 4])))
+
+(deftest test-remove-duplicate
+  "Test different implementations of remove-duplicate."
+  ^{:qn 2.1}
+  (test-remove-duplicate-f #(CTCI/removeDuplicate %))
+  (test-remove-duplicate-f #(CTCI/removeDuplicateWithoutBuffer %)))

@@ -54,7 +54,7 @@ public class CTCI {
     }
 
     /**
-     * Remove duplicate elements in linked list
+     * Remove duplicate elements in linked list.
      *
      * qn: 2.1
      */
@@ -69,6 +69,28 @@ public class CTCI {
                 nav.next = nav.next.next;
             } else {
                 set.add(nav.next.val);
+                nav = nav.next;
+            }
+        }
+        return head;
+    }
+
+    /**
+     * Remove duplicate elements in linked list.
+     *
+     * This version does not use additional buffer.
+     *
+     * qn: 2.1
+     */
+    public static LinkedListNode<Integer> removeDuplicateWithoutBuffer(LinkedListNode<Integer> head) {
+        if (head == null) return head;
+        LinkedListNode<Integer> nav = head;
+        while (nav.next != null) {
+            LinkedListNode<Integer> nav2 = head;
+            while (nav2.val != nav.next.val) { nav2 = nav2.next; }
+            if (nav2 != nav.next) {
+                nav.next = nav.next.next;
+            } else {
                 nav = nav.next;
             }
         }
