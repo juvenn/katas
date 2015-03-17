@@ -4,6 +4,7 @@
  * Tests are in Clojure and put in the module `katas.clj.java-ctci-test`.
  **/
 package katas.java;
+import java.util.HashSet;
 
 public class CTCI {
 
@@ -50,5 +51,27 @@ public class CTCI {
             }
         }
         return m;
+    }
+
+    /**
+     * Remove duplicate elements in linked list
+     *
+     * qn: 2.1
+     */
+    public static LinkedListNode<Integer> removeDuplicate(LinkedListNode<Integer> head) {
+        if (head == null) return head;
+        HashSet<Integer> set = new HashSet<Integer>();
+        LinkedListNode<Integer> nav = head;
+        set.add(nav.val);
+
+        while (nav.next != null) {
+            if (set.contains(nav.next.val)) {
+                nav.next = nav.next.next;
+            } else {
+                set.add(nav.next.val);
+                nav = nav.next;
+            }
+        }
+        return head;
     }
 }
