@@ -52,14 +52,11 @@ class CTCI:
     # qn: 2.2
     def find_nth_to_last(head, n):
         nav1 = nav2 = head
-        if n < 0:
-            for i in range(1, -n):
-                if nav1: nav1 = nav1.next
-                else: raise IndexError("Out of range error")
-            return nav1.val
-        for i in range(0, n):
+        for i in range(1, abs(n)):
             if nav2: nav2 = nav2.next
             else: raise IndexError("Out of range error")
+        if n < 0: return nav2.val
+        if n > 0: nav2 = nav2.next # offset by 1
         while nav2.next:
             nav1 = nav1.next
             nav2 = nav2.next
