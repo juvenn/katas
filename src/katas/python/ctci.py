@@ -47,3 +47,20 @@ class CTCI:
                 _set.add(nav.next.val)
                 nav = nav.next
         return head
+
+    ## Find nth item to last
+    # qn: 2.2
+    def find_nth_to_last(head, n):
+        nav1 = nav2 = head
+        if n < 0:
+            for i in range(1, -n):
+                if nav1: nav1 = nav1.next
+                else: raise IndexError("Out of range error")
+            return nav1.val
+        for i in range(0, n):
+            if nav2: nav2 = nav2.next
+            else: raise IndexError("Out of range error")
+        while nav2.next:
+            nav1 = nav1.next
+            nav2 = nav2.next
+        return nav1.val
