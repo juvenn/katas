@@ -83,3 +83,22 @@
   ^{:qn 2.1}
   (test-remove-duplicate-f #(CTCI/removeDuplicate %))
   (test-remove-duplicate-f #(CTCI/removeDuplicateWithoutBuffer %)))
+
+(deftest test-remove-node-in-middle
+  "Test remove node in the middle of singly linked list."
+  ^{:qn 2.3}
+  (testing "it shall raise exception when remove a singluar node"
+    (is (thrown? IllegalArgumentException
+                 (CTCI/removeNodeInMiddle (LinkedListNode. 42)))))
+  (testing "it shall return sequence with one item removed"
+    (loop [xs (range 0 4)
+           head (make-linked-list LinkedListNode
+                                  #(set! (. %1 next) %2) xs)]
+      (when (> (count xs) 1)
+        (let [n (-> (count xs) dec rand-int)
+              xs1 (concat (take n xs) (drop (inc n) xs))
+              node (.walk head n)]
+          (CTCI/removeNodeInMiddle node)
+          (is (= xs1 (seq head)))
+          (recur xs1 head))))
+    ))

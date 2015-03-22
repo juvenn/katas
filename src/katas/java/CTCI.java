@@ -96,4 +96,24 @@ public class CTCI {
         }
         return head;
     }
+
+    /**
+     * Remove node in the middle of singly linked list.
+     *
+     * It is not possible to remove last node.
+     *
+     * qn: 2.3
+     */
+    public static void removeNodeInMiddle(LinkedListNode<Integer> node) {
+        if (node == null || node.next == null)
+            throw new IllegalArgumentException("Cannot remove last node.");
+        LinkedListNode<Integer> nav = node;
+        while (nav.next.next != null){
+            nav.val = nav.next.val;
+            nav = nav.next;
+        }
+        nav.val = nav.next.val;
+        nav.next = null;
+
+    }
 }

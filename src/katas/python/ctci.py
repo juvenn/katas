@@ -25,6 +25,17 @@ class LinkedListNode:
             nav = nav.next
         return head
 
+    def walk(self, n):
+        """
+        Walk number of nodes down the singly linked list, and return that node
+        """
+        nav = self
+        for i in range(0, n):
+            if nav.next: nav = nav.next
+            else: raise IndexError()
+        return nav
+
+
     def append(self, val):
         nav = self
         while nav.next: nav = nav.next
@@ -61,3 +72,17 @@ class CTCI:
             nav1 = nav1.next
             nav2 = nav2.next
         return nav1.val
+
+    ## Remove node in the middle of singly linked list
+    # qn: 2.3
+    def remove_node_in_middle(node):
+        if not (node and node.next):
+            raise IndexError("Could not remove last node")
+        nav = node
+        while nav.next.next:
+            nav.val = nav.next.val
+            nav = nav.next
+        nav.val = nav.next.val
+        nav.next = None
+
+

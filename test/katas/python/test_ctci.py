@@ -88,6 +88,33 @@ class TestCTCIFindNthToLast(unittest.TestCase):
             val = CTCI.find_nth_to_last(head, -n)
             self.assertEqual(xs[n-1], val)
 
+class TestCTCIRemoveNodeInMiddle(unittest.TestCase):
+    """
+    Remove node in the middle of singly linked list, given only access to that
+    code.
+
+    qn: 2.3
+    """
+    def test_single_node_shall_raise_exception(self):
+        head = LinkedListNode(2)
+        with self.assertRaises(IndexError):
+            CTCI.remove_node_in_middle(head)
+
+    def test_head_should_remove_the_first(self):
+        for xs in [range(1, 10), range(1, 1000), range(10000, 0, -10)]:
+            head = LinkedListNode.from_seq(xs)
+            CTCI.remove_node_in_middle(head)
+            self.assertEqual(list(xs[1:]), list(head))
+
+    def test_random_should_remove_item(self):
+        xs = list(range(1000, 0, -3))
+        head = LinkedListNode.from_seq(xs)
+        while len(xs) >= 2:
+            n = random.randrange(0, len(xs)-1) # exclude the last one
+            xs.pop(n)
+            node = head.walk(n)
+            CTCI.remove_node_in_middle(node)
+            self.assertEqual(xs, list(head))
 
 if __name__ == "__main__":
     unittest.main()
