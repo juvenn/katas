@@ -45,4 +45,27 @@ public class LeetCode {
             } else { i++; }
         }
     }
+
+
+    /**
+     * Convert a string into zig-zag one
+     **/
+    public static String zigZagConvert(String s, int numRows) {
+        // we divide the string into smallest repeat groups
+        if (numRows < 2) return s;
+        int widthGroup = numRows * 2 - 2;
+        int numGroup = s.length() / widthGroup;
+        StringBuilder sb = new StringBuilder();
+        for (int j=0; j < numRows; j++) {
+            for (int i=0; i <= numGroup; i++) {
+                int start = widthGroup * i;
+                if (start + j < s.length())
+                    sb.append(s.charAt(start + j));
+                int index2 = start + numRows - 1 + numRows - 1 - j;
+                if (j > 0 && j < numRows-1 && index2 < s.length())
+                    sb.append(s.charAt(index2));
+            }
+        }
+        return sb.toString();
+    }
 }

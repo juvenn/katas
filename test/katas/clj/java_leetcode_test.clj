@@ -22,3 +22,17 @@
        [2 0] [0 2]
        [2 2 2 2] [2 2 2 2]
        [2 0 1 2] [0 1 2 2]))
+
+(deftest test-zig-zag-convert
+  (are [ins rows outs] (= outs (LeetCode/zigZagConvert ins rows))
+       "zigzagtictoe" 1 "zigzagtictoe"
+       "zigzagtictoe" 2 "zgatcoizgite"
+       "paypalishiring" 3 "pahnaplsiigyir"
+       "zig" 3 "zig"
+       "zigz" 3 "zizg"
+       "zigza" 3 "zaizg"
+       "zigzag" 3 "zaizgg"
+       "zigzagz" 3 "zaizggz"
+       "zigzagzi" 3 "zaizgigz"
+       "zigzagzig" 3 "zagizgigz"
+       ))
