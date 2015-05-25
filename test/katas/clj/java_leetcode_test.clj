@@ -36,3 +36,17 @@
        "zigzagzi" 3 "zaizgigz"
        "zigzagzig" 3 "zagizgigz"
        ))
+
+(deftest test-zig-zag-convert-rows
+  (are [ins rows outs] (= outs (LeetCode/zigZagConvertRows ins rows))
+       "zigzagtictoe" 1 "zigzagtictoe"
+       "zigzagtictoe" 2 "zgatcoizgite"
+       "paypalishiring" 3 "pahnaplsiigyir"
+       "zig" 3 "zig"
+       "zigz" 3 "zizg"
+       "zigza" 3 "zaizg"
+       "zigzag" 3 "zaizgg"
+       "zigzagz" 3 "zaizggz"
+       "zigzagzi" 3 "zaizgigz"
+       "zigzagzig" 3 "zagizgigz"
+       ))

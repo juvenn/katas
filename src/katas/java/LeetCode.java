@@ -68,4 +68,27 @@ public class LeetCode {
         }
         return sb.toString();
     }
+
+    /**
+     * ZigZag Conversion: accumulate chars in rows
+     **/ 
+    public static String zigZagConvertRows(String s, int numRows) {
+        if (numRows < 2) return s;
+        boolean inc = true;
+        int     row = 0;
+        StringBuilder[] sb = new StringBuilder[numRows];
+        // accumulate rows
+        for (int i=0; i < s.length(); i++) {
+            if (sb[row] == null) sb[row] = new StringBuilder();
+            sb[row].append(s.charAt(i));
+            if      (row == 0)           inc = true;
+            else if (row == numRows - 1) inc = false;
+            if   (inc) row++;
+            else       row--;
+        }
+        for (int i=1; i < numRows; i++)
+            for (int j=0; j < sb[i].length(); j++)
+                sb[0].append(sb[i].charAt(j));
+        return sb[0].toString();
+    }
 }
