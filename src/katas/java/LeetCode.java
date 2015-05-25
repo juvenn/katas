@@ -4,6 +4,7 @@
  * Tests are in Clojure and put in the module `katas.clj.java-ctci-test`.
  **/
 package katas.java;
+import java.util.Hashtable;
 
 public class LeetCode {
     /**
@@ -90,5 +91,47 @@ public class LeetCode {
             for (int j=0; j < sb[i].length(); j++)
                 sb[0].append(sb[i].charAt(j));
         return sb[0].toString();
+    }
+
+
+    /**
+     * Given an array of integers, find two numbers such that they add
+     * up to a specific target number.
+     *
+     * The function twoSum should return indices of the two numbers
+     * such that they add up to the target, where index1 must be less
+     * than index2. Please note that your returned answers (both
+     * index1 and index2) are not zero-based.
+     *
+     * Input: [2, 7, 11, 15], 9
+     * Output: 1, 2
+     **/
+    public static int[] twoSum(int[] nums, int target) {
+        int[] result = new int[2];
+        for (int i=0; i < nums.length-1; i++)
+            for (int j=i+1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    result[0] = i + 1;
+                    result[1] = j + 1;
+                    return result;
+                }
+            }
+        return null;
+    }
+
+    public static int[] twoSumLinear(int[] nums, int target) {
+        Hashtable<Integer, Integer> table = new Hashtable<Integer,Integer>();
+        for (int i=0; i < nums.length; i++) table.put(nums[i], i);
+        int[] result = new int[2];
+        for (int i=0; i < nums.length; i++) {
+            int     val = target - nums[i];
+            Integer j   = table.get(val);
+            if (j != null && i != j) {
+                result[0] = (i < j) ? i+1 : j+1;
+                result[1] = (i < j) ? j+1 : i+1;
+                return result;
+            }
+        }
+        return null;
     }
 }

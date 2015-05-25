@@ -50,3 +50,29 @@
        "zigzagzi" 3 "zaizgigz"
        "zigzagzig" 3 "zagizgigz"
        ))
+
+
+(deftest test-two-sum
+  (are [nums sum tuple] (= tuple
+                           (-> (int-array nums)
+                               (LeetCode/twoSum sum)
+                               vec))
+       [] 0 []
+       [2 7 11 15] 0 []
+       [-2 7 2 15] 0 [1 3]
+       [2 7 11 15] 10 []
+       [2 7 11 15] 22 [2 4]
+       [2 7 11 15] 9 [1 2]))
+
+(deftest test-two-sum-linear
+  (are [nums sum tuple] (= tuple
+                           (-> (int-array nums)
+                               (LeetCode/twoSumLinear sum)
+                               vec))
+       [] 0 []
+       [3 2 4] 6 [2 3]
+       [2 7 11 15] 0 []
+       [-2 7 2 15] 0 [1 3]
+       [2 7 11 15] 10 []
+       [2 7 11 15] 22 [2 4]
+       [2 7 12 15] 9 [1 2]))
