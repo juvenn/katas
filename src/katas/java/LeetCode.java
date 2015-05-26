@@ -134,4 +134,24 @@ public class LeetCode {
         }
         return null;
     }
+
+    /**
+     * Reverse digits in integer
+     *
+     * E.g.: 123 => 321, -123 => -321
+     **/
+    public static int reverseInteger(int x) {
+        int quot  = x;
+        int accum = 0;
+        while (quot / 10 != 0) {
+            accum = accum * 10 + quot % 10;
+            quot  = quot / 10;
+        }
+        // check integer overflow
+        int bound = Integer.MAX_VALUE / 10;
+        if (accum > bound || accum < - bound) return 0;
+
+        accum = accum * 10 + quot;
+        return accum;
+    }
 }
