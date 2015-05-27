@@ -154,4 +154,38 @@ public class LeetCode {
         accum = accum * 10 + quot;
         return accum;
     }
+
+    /**
+     * Palindrome number, Determine whether an integer is a
+     * palindrome. Do this without extra space.
+     **/
+    public static boolean isPalindrome(int x) {
+        if (x < 0) return false;
+        int quot = x;
+        int rev  = 0; // reverse integer
+        while (quot / 10 != 0) {
+            rev  = rev * 10 + quot % 10;
+            quot = quot / 10;
+        }
+        // check integer overflow
+        int bound = Integer.MAX_VALUE / 10;
+        if (rev > bound) return false;
+
+        rev = rev * 10 + quot;
+        return rev == x;
+    }
+
+    public static boolean isPalindrome2(int x) {
+        if (x < 0) return false;
+        int div = 1;
+        while (x / div >= 10) {
+            div *= 10;
+        }
+        while (x != 0) {
+            if (x % 10 != x / div) return false;
+            x = (x % div) / 10;
+            div /= 100;
+        }
+        return true;
+    }
 }

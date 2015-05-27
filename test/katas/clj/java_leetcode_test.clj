@@ -93,3 +93,30 @@
        1534236469  0
        -1534236469 0
        ))
+
+(deftest test-is-int-palindrome
+  (are [n bool] (= bool (LeetCode/isPalindrome n))
+       0 true
+       11 true
+       12 false
+       131 true
+       1221 true
+       1000021 false
+       1463847412 false
+       2147447412 true
+       2147347412 false
+       2147483647 false
+       )
+  (are [n bool] (= bool (LeetCode/isPalindrome2 n))
+       0 true
+       11 true
+       12 false
+       131 true
+       1221 true
+       1000021 false
+       1463847412 false
+       2147447412 true
+       2147347412 false
+       2147483647 false
+       )
+  )
