@@ -188,4 +188,47 @@ public class LeetCode {
         }
         return true;
     }
+
+    /**
+     * Count and Say
+     * 
+     * The count-and-say sequence is the sequence of integers beginning as
+     * follows: 1, 11, 21, 1211, 111221, ...
+     * 
+     * 1 is read off as "one 1" or 11.  11 is read off as "two 1s" or
+     * 21.  21 is read off as "one 2, then one 1" or 1211.
+     * 
+     * Given an integer n, generate the nth sequence.
+     * 
+     * Note: The sequence of integers will be represented as a string.
+     **/
+    public static String countAndSay(int n) {
+        assert(n > 0);
+        StringBuilder seq = new StringBuilder("1");
+        for (int i=1; i < n; i++)
+            seq = nextSay(seq);
+        return seq.toString();
+    }
+
+    public static StringBuilder nextSay(StringBuilder seq) {
+        if (seq.length() == 0) return seq;
+        int          cnt = 1;
+        char           c = seq.charAt(0);
+        StringBuilder sb = new StringBuilder();
+        for (int i=1; i < seq.length(); i++) {
+            if ('0' > seq.charAt(i) || '9' < seq.charAt(i))
+                throw new IllegalArgumentException();
+            if (seq.charAt(i) == c) cnt++;
+            else {
+                sb.append(cnt);
+                sb.append(c);
+                cnt = 1;
+                c   = seq.charAt(i);
+            }
+        }
+        // append last group
+        sb.append(cnt);
+        sb.append(c);
+        return sb;
+    }
 }

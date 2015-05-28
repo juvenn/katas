@@ -120,3 +120,18 @@
        2147483647 false
        )
   )
+
+(deftest test-count-and-say
+  (are [n s] (= s (LeetCode/countAndSay n))
+       1 "1"
+       2 "11"
+       3 "21"
+       4 "1211"))
+
+(deftest test-next-say
+  (are [s1 s2] (= s2 (-> (StringBuilder. s1)
+                         LeetCode/nextSay
+                         .toString))
+       "1" "11"
+       "11" "21"
+       "21" "1211"))
