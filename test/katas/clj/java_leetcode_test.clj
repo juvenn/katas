@@ -1,7 +1,7 @@
 (ns katas.clj.java-leetcode-test
   "Testing Leetcode java solutions using clojure"
   (:require [clojure.test :refer :all])
-  (:import [katas.java LeetCode]))
+  (:import [katas.java LeetCode ListNode]))
 
 (deftest test-sort-colors
   (are [xs ys] (= ys (let [nums (int-array xs)]
@@ -135,3 +135,43 @@
        "1" "11"
        "11" "21"
        "21" "1211"))
+
+(defn to-list-node
+  "Build list node from a sequence of integers."
+  [[^int n & xs]]
+  (if (nil? n) nil
+      (let [head (ListNode. n)]
+       (reduce (fn [x m]
+                 (set! (. x next) (ListNode. m)))
+               head xs)
+       head)))
+
+(defn from-list-node
+  "Return vector from linked list node."
+  [^ListNode head]
+  (loop [vec []
+         x head]
+    (if (nil? x) vec
+        (recur (conj vec (.val x)) (.next x)))))
+
+(deftest test-to-list-node
+  (are [xs] (= xs (-> xs to-list-node
+                      from-list-node))
+       []
+       [2]
+       [2 3]
+       [2 3 5]
+       [2 3 5 7]
+       ))
+
+(deftest test-reverse-list
+  (are [xs] (= (reverse xs)
+               (-> xs
+                   to-list-node
+                   LeetCode/reverseList
+                   from-list-node))
+       []
+       [2]
+       [2 3]
+       [2 3 5]
+       [2 3 2 5 3 7]))
