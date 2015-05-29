@@ -267,4 +267,15 @@ public class LeetCode {
         }
         return x;
     }
+
+    public static ListNode reverseListRecur(ListNode head) {
+        return reverseListRecur2(head, null);
+    }
+
+    public static ListNode reverseListRecur2(ListNode nav, ListNode res) {
+        if (nav == null) return res;
+        ListNode x = new ListNode(nav.val);
+        x.next = res;
+        return reverseListRecur2(nav.next, x);
+    }
 }

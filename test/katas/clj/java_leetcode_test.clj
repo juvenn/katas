@@ -174,4 +174,15 @@
        [2]
        [2 3]
        [2 3 5]
-       [2 3 2 5 3 7]))
+       [2 3 2 5 3 7])
+  (are [xs] (= (reverse xs)
+               (-> xs
+                   to-list-node
+                   LeetCode/reverseListRecur
+                   from-list-node))
+       []
+       [2]
+       [2 3]
+       [2 3 5]
+       [2 3 2 5 3 7])
+  )
