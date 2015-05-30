@@ -250,7 +250,38 @@ public class LeetCode {
      * If there are multiple such windows, you are guaranteed that
      * there will always be only one unique minimum window in S.
      **/
-    public static String minWindow(String s, String t) { return null;}
+    public static String minWindow(String s, String t) {
+        if (t.length() == 0) return "";
+        int[] cnt = new int[256]; // assume chars are in ASCII.
+        for (int i = 0; i < t.length(); i++) cnt[t.charAt(i)]++;
+
+        int[] found   = new int[256];
+        int min_width = s.length() + 1;
+        int min_lo    = 0,
+            min_hi    = min_width;
+        int count     = 0;
+        for (int lo=0,  hi=0; hi < s.length(); hi++) {
+            if (cnt[s.charAt(hi)] == 0) continue;
+            found[s.charAt(hi)]++;
+            if (found[s.charAt(hi)] <= cnt[s.charAt(hi)]) count++;
+
+            if (count == t.length()) {
+                while (cnt[s.charAt(lo)] == 0 ||
+                       found[s.charAt(lo)] > cnt[s.charAt(lo)]) {
+                    found[s.charAt(lo)]--;
+                    lo++;
+                }
+
+                int width = hi - lo;
+                if (width <= min_width) {
+                    min_width = width;
+                    min_lo = lo;
+                    min_hi = hi;
+                }
+            }
+        }
+        return (min_width > s.length()) ? "" : s.substring(min_lo, min_hi+1);
+    }
 
     /**
      * Reverse Linked List

@@ -186,3 +186,16 @@
        [2 3 5]
        [2 3 2 5 3 7])
   )
+
+
+(deftest test-min-window
+  (are [s t window] (= window (LeetCode/minWindow s t))
+       "acbbaca" "aba" "baca"
+       "this is a test string" "tist" "t stri"
+       "" "ABC" ""
+       "ADOBECODEBANC" "" ""
+       "ADOBECODEBANC" "ABC" "BANC"
+       "ADOBECODEBANC" "BC" "BEC"
+       "ADOBECODEBANC" "ABCC" "CODEBANC"
+       "ADOBECODEBANC" "CC" "CODEBANC"
+       ))
