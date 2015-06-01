@@ -5,6 +5,8 @@
  **/
 package katas.java;
 import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class LeetCode {
     /**
@@ -309,4 +311,63 @@ public class LeetCode {
         x.next = res;
         return reverseListRecur2(nav.next, x);
     }
+
+
+    /**
+     * Number of Islands
+     *
+     * Given a 2d grid map of '1's (land) and '0's (water), count the
+     * number of islands. An island is surrounded by water and is
+     * formed by connecting adjacent lands horizontally or
+     * vertically. You may assume all four edges of the grid are all
+     * surrounded by water.
+     *
+     * 11110
+     * 11010     => 1
+     * 11000
+     * 00000
+     * 
+     * 11000
+     * 11000     => 3
+     * 00100
+     * 00011
+     **/
+    public static int numIslands(char[][] grid) {
+        if (grid.length == 0) return 0;
+        int wid = grid[0].length;
+        int hei = grid.length;
+        int size = wid * hei;
+        int islands = 0;
+        boolean[] marked = new boolean[size]; // is cell walked
+        for (int i=0; i < size; i++) {
+            if (marked[i]) continue;
+            int lands = 0; // number of lands connected
+            // queue of land neighbors
+            LinkedList<Integer> q = new LinkedList<Integer>();
+            q.add(i);
+            while (!q.isEmpty()) {
+                int x = q.remove();
+                if (marked[x]) continue;
+                marked[x] = true;
+                if (grid[x / wid][x % wid] != '1') continue;
+                lands++;
+
+                // possible neighbors: x - wid, x - 1, x + 1, x + wid;
+                ArrayList<Integer> nbs = new ArrayList<Integer>();
+                if (x - wid >= 0)
+                    nbs.add(x - wid);
+                if ((x - 1) > 0 && ((x - 1) % wid + 1 != wid))
+                    nbs.add(x - 1);
+                if ((x + 1) % wid != 0)
+                    nbs.add(x + 1);
+                if (x + wid < size)
+                    nbs.add(x + wid);
+                for (int y: nbs)
+                    if (!marked[y]) q.add(y);
+            }
+            if (lands > 0) islands++;
+        }
+        return islands;
+    }
+
 }

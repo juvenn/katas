@@ -199,3 +199,45 @@
        "ADOBECODEBANC" "ABCC" "CODEBANC"
        "ADOBECODEBANC" "CC" "CODEBANC"
        ))
+
+(defn array2d
+  "Convert collection of collection into 2-dimensional array with optional type.
+   The default is Object, and the inner collection must have consistent length.
+
+  See also: clojure.core.to-array-2d.
+  "
+  ([coll] (array2d Object coll))
+  ([^Class type ^java.util.Collection coll]
+   (let [[x :as xs] (seq coll)
+         len (count (seq x))
+         ret (make-array type (. coll (size)) len)]
+    (loop [i 0 xs xs]
+      (when-let [[x & ys] xs]
+        (assert (= len (count x)))
+        (doseq [[k v] (map-indexed #(vector %1 %2) x)]
+          (aset ret i k v))
+        (recur (inc i) ys)))
+    ret))
+  )
+
+(deftest test-num-islands
+  (are [a-map n] (= n (let [grid (array2d Character/TYPE a-map)]
+                         (LeetCode/numIslands grid)))
+       ["0"] 0
+       ["1"] 1
+       ["00"
+        "00"] 0
+       ["00"
+        "01"] 1
+       ["10"
+        "01"] 2
+       ["1001100"] 2
+       ["11110"
+        "11010"
+        "11000"
+        "00000"] 1
+       ["11000"
+        "11000"
+        "00100"
+        "00011"] 3
+ ))
