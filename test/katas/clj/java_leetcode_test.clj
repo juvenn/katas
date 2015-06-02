@@ -241,3 +241,15 @@
         "00100"
         "00011"] 3
  ))
+
+(deftest test-max-subarray
+  (are [xs sum] (= sum (LeetCode/maxSubArray (int-array xs)))
+       [] 0
+       [1] 1
+       [1 2 3] 6
+       [2 0 1 1] 4
+       [-3 -2 -1] -1
+       [-1 -2 -3 -1] -1
+       [-2 1 -3 4 -1 2 1 -5 4] 6
+       [8 -19 5 -4 20] 21
+       ))

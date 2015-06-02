@@ -370,4 +370,70 @@ public class LeetCode {
         return islands;
     }
 
+    /**
+     * Maximum Subarray
+     *
+     * Find the contiguous subarray within an array (containing at
+     * least one number) which has the largest sum.
+     *
+     * Example: [-2,1,-3,4,-1,2,1,-5,4]
+     * the maximum sub array [4,-1,2,1], the sum is 6.
+     
+     [8 -19 5 -4 20]
+  nums[i] sum_val max_val max_lo max_hi
+   8       8       8       0      0    
+  -19     -11      8       0      0    
+   5      -6       8       0      0
+
+     **/
+    public static int maxSubArray(int[] nums) {
+        if (nums.length == 0) return 0;
+        int max_val = nums[0];
+        int sum_val = nums[0];
+        for (int i=1; i < nums.length; i++) {
+            sum_val = (sum_val > 0) ? sum_val + nums[i] : nums[i];
+            if (max_val > sum_val && max_val > nums[i]) continue;
+            if (sum_val >= max_val && sum_val > nums[i]) {
+                max_val = sum_val;
+                continue;
+            }
+            sum_val = nums[i];
+            max_val = nums[i];
+        }
+        return max_val;
+    }
+
+    // this version keeps index range of best consecutive sum.
+    public static int maxSubArray2(int[] nums) {
+        if (nums.length == 0) return 0;
+        int max_val = nums[0];  // max sum
+        int max_lo  = 0,
+            max_hi  = 0;        // the index range of max_val
+        int sum_val = nums[0];  // next best consecutive sum
+        int sum_lo  = 0;
+        for (int i=1; i < nums.length; i++) {
+            // if sum is negative, it will not contribute to further
+            // sum, so we drop previous sum, and start anew.
+            if   (sum_val > 0) sum_val += nums[i];
+            else {
+                sum_val = nums[i];
+                sum_lo  = i;
+            }
+            if (max_val > sum_val && max_val > nums[i])
+                continue;
+            if (sum_val >= max_val && sum_val > nums[i]) {
+                max_val = sum_val;
+                max_lo  = sum_lo;
+                max_hi  = i; // max_lo remains
+                continue;
+            }
+            // else nums[i] is the maximum
+            max_val = nums[i];
+            max_lo  = i;
+            max_hi  = i;
+            sum_val = nums[i];
+        }
+        return max_val;
+    }
+
 }
