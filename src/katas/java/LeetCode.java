@@ -436,4 +436,11 @@ public class LeetCode {
         return max_val;
     }
 
+    /**
+     * Maximum Subarray, divide and conquer approach
+     **/
+    public static int maxSubArray3(int[] nums) {
+        return 0;
+    }
+
 }
