@@ -443,4 +443,27 @@ public class LeetCode {
         return 0;
     }
 
+    /**
+     * Dungeon Game
+     **/
+    public static int calculateMinHP(int[][] dungeon) {
+        // Dynamic programming: calculate minimum hp required
+        // backwardly from target cell. Observe that,
+        // 1) to enter next cell, it must has at least 1 point,
+        // 2) there're only two path from [i j] to [i+1 j+1].
+        int M = dungeon.length;
+        int N = dungeon[0].length;
+        int[][] hp = new int[M][N]; // minimum hp required to enter [i,j]
+        hp[M-1][N-1] = Math.max(1, 1 - dungeon[M-1][N-1]);
+        for (int i=M-2; i >= 0; i--)
+            hp[i][N-1] = Math.max(1, hp[i+1][N-1] - dungeon[i][N-1]);
+        for (int j=N-2; j >= 0; j--)
+            hp[M-1][j] = Math.max(1, hp[M-1][j+1] - dungeon[M-1][j]);
+        for (int i=M-2; i >= 0; i--)
+            for (int j=N-2; j >= 0; j--)
+                hp[i][j] = Math.max((Math.min(hp[i+1][j], hp[i][j+1])) - dungeon[i][j],
+                               1);
+        return hp[0][0];
+    }
+
 }

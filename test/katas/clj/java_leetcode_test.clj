@@ -200,6 +200,15 @@
        "ADOBECODEBANC" "CC" "CODEBANC"
        ))
 
+(defmulti cast!
+  "Cast x to specified type."
+  (fn [^Class type x] type))
+(defmethod cast! Character [_ x] (char x))
+(defmethod cast! Character/TYPE [_ x] (char x))
+(defmethod cast! Integer [_ x] (int x))
+(defmethod cast! Integer/TYPE [_ x] (int x))
+
+
 (defn array2d
   "Convert collection of collection into 2-dimensional array with optional type.
    The default is Object, and the inner collection must have consistent length.
@@ -215,7 +224,7 @@
       (when-let [[x & ys] xs]
         (assert (= len (count x)))
         (doseq [[k v] (map-indexed #(vector %1 %2) x)]
-          (aset ret i k v))
+          (aset ret i k (cast! type v)))
         (recur (inc i) ys)))
     ret))
   )
@@ -256,3 +265,14 @@
   (are [xs sum] (= sum (LeetCode/maxSubArray3 (int-array xs)))
        [] 0
        [8 -19 5 -4 20] 21))
+
+(deftest test-minimum-hp
+  (are [xs hp] (= hp (let [grid (array2d Integer/TYPE xs)]
+                       (LeetCode/calculateMinHP grid)))
+       [[0]] 1
+       [[1]] 1
+       [[9]] 1
+       [[-2 4]] 3
+       [[-2 -3 3]
+        [-5 -10 1]
+        [10 30 -5]] 7))
