@@ -477,7 +477,7 @@ public class LeetCode {
     private static TreeNode buildTree(int[] a, int lo, int hi) {
         if (lo > hi)  return null;
         if (lo == hi) return new TreeNode(a[lo]);
-        int mid = lo + (hi - lo + 1) / 2;
+        int mid = (hi + lo + 1) / 2;
         TreeNode node = new TreeNode(a[mid]);
         node.left  = buildTree(a, lo, mid-1);
         node.right = buildTree(a, mid+1, hi);
