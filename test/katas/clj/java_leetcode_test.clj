@@ -276,3 +276,17 @@
        [[-2 -3 3]
         [-5 -10 1]
         [10 30 -5]] 7))
+
+(deftest test-sorted-array-to-bst
+  (is (nil? (LeetCode/sortedArrayToBST (int-array []))))
+  (are [xs rootval] (= rootval (-> xs
+                                   int-array
+                                   LeetCode/sortedArrayToBST
+                                   (.. val)))
+       [1] 1
+       [1 2] 2
+       [1 2 3] 2
+       [1 2 3 4] 3
+       [1 2 3 4 5] 3
+       [1 2 3 4 5 6] 4
+       ))
