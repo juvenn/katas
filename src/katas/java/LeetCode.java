@@ -7,6 +7,7 @@ package katas.java;
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class LeetCode {
     /**
@@ -482,5 +483,59 @@ public class LeetCode {
         node.left  = buildTree(a, lo, mid-1);
         node.right = buildTree(a, mid+1, hi);
         return node;
+    }
+
+    /**
+     * Sorted List to Binary Search Tree
+     *
+     * Given a singly linked list where elements are sorted in
+     * ascending order, convert it to a height balanced BST.
+     **/
+    public static TreeNode sortedListToBST(ListNode head) {
+        Stack<Parent> st = new Stack<Parent>();
+        while (head != null) {
+            promote(st, new TreeNode(head.val));
+            head = head.next;
+        }
+        Parent p = null;
+        while (!st.isEmpty()) p = st.pop();
+        if (p == null) return null;
+        else           return p.node;
+    }
+
+    private static class Parent {
+        public boolean inRed;
+        public TreeNode node;
+        public Parent(TreeNode x, boolean red) {
+            inRed = red;
+            node  = x;
+        }
+
+        public String toString() {
+            return String.format("%d[%b]", node.val, inRed);
+        }
+    }
+
+    /**
+     * Promote a node and its ancestors
+     **/
+    private static void promote(Stack<Parent> st, TreeNode x) {
+        if (st.isEmpty()) {
+            st.push(new Parent(x, false));
+            return;
+        }
+        Parent p = st.pop();
+        if (!p.inRed) {
+            // p is not an ancestor of x any more
+            // stop promoting
+            p.node.right = x.left;
+            x.left = p.node;
+            if (!st.isEmpty()) st.peek().node.right = x;
+            st.push(new Parent(x, true));
+        } else {
+            p.node.right = x;
+            promote(st, p.node); // further promote
+            st.push(new Parent(x, false));
+        }
     }
 }

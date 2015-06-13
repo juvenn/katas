@@ -290,3 +290,43 @@
        [1 2 3 4 5] 3
        [1 2 3 4 5 6] 4
        ))
+
+(defn seq-to-listnode
+  [[^int x & xs]]
+  (when x
+    (let [head (ListNode. x)]
+      (reduce #(set! (. %1 next) (ListNode. %2)) head xs)
+      head))
+  )
+
+(deftest test-sorted-list-to-bst
+  (testing "tree size should match"
+    (are [xs] (= (count xs) (-> xs
+                                seq-to-listnode
+                                LeetCode/sortedListToBST
+                                .size))
+         (range 1)
+         (range 7)
+         (range 10)
+         (range 20)
+         (range 100)
+         (range 133)
+         (range 203)
+         ))
+  (testing "tree height should be between log2(N) and log3(N)"
+    (are [xs] (let [n (count xs)
+                    hi (/ (Math/log n) (Math/log 2))
+                    lo (/ (Math/log n) (Math/log 3))
+                    h (-> xs
+                          seq-to-listnode
+                          LeetCode/sortedListToBST
+                          .height)]
+                (or (>= h lo) (<= h hi)))
+         (range 1)
+         (range 7)
+         (range 10)
+         (range 20)
+         (range 100)
+         (range 133)
+         (range 203)
+         )))
