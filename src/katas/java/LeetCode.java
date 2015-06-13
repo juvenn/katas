@@ -492,7 +492,32 @@ public class LeetCode {
      * ascending order, convert it to a height balanced BST.
      **/
     public static TreeNode sortedListToBST(ListNode head) {
-        Stack<Parent> st = new Stack<Parent>();
+        int n = 0;
+        for (ListNode x = head; x != null; x = x.next) n++;
+        // Keep head in array of one ListNode, so it is possible
+        // to move the head forward in outer context within method.
+        ListNode[] nodes = {head};
+        return buildBalancedTree(nodes, 0, n-1);
+    }
+
+    public static TreeNode buildBalancedTree(ListNode[] nodes,
+                                             int lo, int hi) {
+        if (lo > hi) return null;
+        int mid = (hi + lo) / 2;
+        TreeNode left = buildBalancedTree(nodes, lo, mid-1);
+        // nodes[0] has moved forward after left tree being built
+        TreeNode parent = new TreeNode(nodes[0].val);
+        parent.left = left;
+        nodes[0] = nodes[0].next;
+        parent.right = buildBalancedTree(nodes, mid+1, hi);
+        return parent;
+    }
+
+    /**
+     * This solution uses red black tree method to balance the height.
+     **/
+    public static TreeNode sortedListToBST2(ListNode head) {
+        Stack<Parent> st = new Stack<Parent>(); // stack of ancestors
         while (head != null) {
             promote(st, new TreeNode(head.val));
             head = head.next;
