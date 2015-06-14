@@ -580,4 +580,24 @@ public class LeetCode {
         root.right    = left;
         return root;
     }
+
+    /**
+     * Number of 1 bits, or hamming weight
+     * Assume n is unsigned integer
+     **/
+    public static int hammingWeight(int n) {
+        int quot  = n;
+        int count = 0;
+        // count the sign bit and convert it to positive integer
+        if (quot < 0) {
+            quot += Integer.MAX_VALUE + 1;
+            count = 1; // count the sign bit
+        }
+        while (quot != 0) {
+            int rem = quot % 2;
+            if (rem == 1) count++;
+            quot /= 2;
+        }
+        return count;
+    }
 }

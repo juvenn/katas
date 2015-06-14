@@ -384,3 +384,18 @@
          [2 [1 nil]] [1 2]
          [2 [nil 5 [4 6]]] [2 4 5 6]
          [4 [2 [1 3] 7 [6 9]]] [1 2 3 4 6 7 9])))
+
+(deftest test-hamming-weight
+  (are [n weight] (= weight (LeetCode/hammingWeight n))
+       0 0
+       1 1
+       2 1
+       3 2
+       4 1
+      -1 32 
+      -2 31
+      -3 31
+      -4 30
+      Integer/MAX_VALUE 31
+      Integer/MIN_VALUE 1
+       ))
