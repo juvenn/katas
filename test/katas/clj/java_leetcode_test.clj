@@ -1,7 +1,7 @@
 (ns katas.clj.java-leetcode-test
   "Testing Leetcode java solutions using clojure"
   (:require [clojure.test :refer :all])
-  (:import [katas.java LeetCode ListNode]))
+  (:import [katas.java LeetCode ListNode TreeNode]))
 
 (deftest test-sort-colors
   (are [xs ys] (= ys (let [nums (int-array xs)]
@@ -330,3 +330,57 @@
          (range 133)
          (range 203)
          )))
+
+(defn tree
+  "Build binary tree from nested collection of integers.
+
+  E.g. (tree '(2 (1 3))) => 1->2<-3
+       (tree '(2 (1 nil))) => 1->2
+       (tree '(2 (nil 3))) => 2<-3
+       (tree '(2 (nil 5 (4 6)))) => 2<-(4->3<-6)
+  "
+  [[x & children]]
+  (cond
+    (nil? x) nil
+    (empty? children) (TreeNode. x)
+    :else
+    (let [[[lv v & pair]] children                       ;; left value
+            rv (if (coll? v) (first pair) v)             ;; right value
+            lc (if (coll? v) v [])                       ;; left children
+            rc (if (coll? v) (second pair) (first pair)) ;; right children
+            node (tree [x])]
+      (set! (. node left)  (tree [lv lc]))
+      (set! (. node right) (tree [rv rc]))
+      node)
+    ))
+
+(deftest test-tree
+  (are [xs res] (= res (-> xs tree .inOrder))
+       [2] [2]
+       [2 [1 3]] [1 2 3]
+       [2 [nil 3]] [2 3]
+       [2 [1 nil]] [1 2]
+       [2 [nil 5 [4 6]]] [2 4 5 6]
+       [4 [2 [1 3] 7 [6 9]]] [1 2 3 4 6 7 9]))
+
+(deftest test-invert-binary-tree
+  (testing "it should invert simple trees"
+    (are [coll xs] (= xs (-> coll tree
+                             (LeetCode/invertTree)
+                             .inOrder))
+         [2] [2]
+         [2 [1 3]] [3 2 1]
+         [2 [nil 3]] [3 2]
+         [2 [1 nil]] [2 1]
+         [2 [nil 5 [4 6]]] [6 5 4 2]
+         [4 [2 [1 3] 7 [6 9]]] [9 7 6 4 3 2 1]))
+  (testing "double invert should be idempotent"
+    (are [coll xs] (= xs (-> coll tree
+                             LeetCode/invertTree
+                             LeetCode/invertTree
+                             .inOrder))
+         [2 [1 3]] [1 2 3]
+         [2 [nil 3]] [2 3]
+         [2 [1 nil]] [1 2]
+         [2 [nil 5 [4 6]]] [2 4 5 6]
+         [4 [2 [1 3] 7 [6 9]]] [1 2 3 4 6 7 9])))

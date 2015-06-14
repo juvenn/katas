@@ -563,4 +563,21 @@ public class LeetCode {
             st.push(new Parent(x, false));
         }
     }
+
+    /**
+     * Invert binary tree
+     *
+     *      4                 4
+     *    /   \             /   \
+     *   2     7     =>    7     2
+     *  / \   / \         / \   / \
+     * 1   3 6   9       9   6 3   1
+     **/
+    public static TreeNode invertTree(TreeNode root) {
+        if (root == null) return null;
+        TreeNode left = invertTree(root.left);
+        root.left     = invertTree(root.right);
+        root.right    = left;
+        return root;
+    }
 }

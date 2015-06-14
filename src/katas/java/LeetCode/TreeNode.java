@@ -28,42 +28,42 @@ public class TreeNode {
         return Math.max(height(x.left), height(x.right)) + 1;
     }
 
-    public List<Integer> inorder() {
+    public List<Integer> inOrder() {
         ArrayList<Integer> list = new ArrayList<Integer>();
-        inorder(this, list);
+        inOrder(this, list);
         return list;
     }
 
-    public void inorder(TreeNode x, List<Integer> list) {
+    public void inOrder(TreeNode x, List<Integer> list) {
         if (x == null) return;
-        inorder(x.left, list);
+        inOrder(x.left, list);
         list.add(x.val);
-        inorder(x.right, list);
+        inOrder(x.right, list);
     }
 
-    public List<Integer> preorder() {
+    public List<Integer> preOrder() {
         ArrayList<Integer> list = new ArrayList<Integer>();
-        preorder(this, list);
+        preOrder(this, list);
         return list;
     }
 
-    private void preorder(TreeNode x, List<Integer> list) {
+    private void preOrder(TreeNode x, List<Integer> list) {
         if (x == null) return;
         list.add(val);
-        preorder(x.left, list);
-        preorder(x.right, list);
+        preOrder(x.left, list);
+        preOrder(x.right, list);
     }
 
-    public List<Integer> postorder() {
+    public List<Integer> postOrder() {
         ArrayList<Integer> list = new ArrayList<Integer>();
-        postorder(this, list);
+        postOrder(this, list);
         return list;
     }
 
-    private void postorder(TreeNode x, List<Integer> list) {
+    private void postOrder(TreeNode x, List<Integer> list) {
         if (x == null) return;
-        postorder(x.left, list);
-        postorder(x.right, list);
+        postOrder(x.left, list);
+        postOrder(x.right, list);
         list.add(x.val);
     }
 
