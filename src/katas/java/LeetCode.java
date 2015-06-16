@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.HashMap;
 
 public class LeetCode {
     /**
@@ -599,5 +600,35 @@ public class LeetCode {
             quot /= 2;
         }
         return count;
+    }
+
+    /**
+     * Clone graph
+     *
+     * Clone unidrected graph, where each graph node contains `label` and
+     * `neighbors`. Assume graph nodes are labeled uniquely.
+     **/
+    public static UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null) return null;
+        HashMap<Integer, UndirectedGraphNode> map = new HashMap<Integer, UndirectedGraphNode>();
+        Stack<UndirectedGraphNode> st = new Stack<UndirectedGraphNode>();
+
+        UndirectedGraphNode root = new UndirectedGraphNode(node.label);
+        map.put(root.label, root);
+        st.push(node);
+        while (!st.isEmpty()) {
+            UndirectedGraphNode x = st.pop();
+            UndirectedGraphNode y = map.get(x.label);
+            for (UndirectedGraphNode x1 : x.neighbors) {
+                UndirectedGraphNode y1 = map.get(x1.label);
+                if (y1 == null) {
+                    y1 = new UndirectedGraphNode(x1.label);
+                    map.put(y1.label, y1);
+                    st.push(x1);
+                }
+                y.neighbors.add(y1);
+            }
+        }
+        return root;
     }
 }

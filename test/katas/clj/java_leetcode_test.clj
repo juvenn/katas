@@ -1,7 +1,7 @@
 (ns katas.clj.java-leetcode-test
   "Testing Leetcode java solutions using clojure"
   (:require [clojure.test :refer :all])
-  (:import [katas.java LeetCode ListNode TreeNode]))
+  (:import [katas.java LeetCode ListNode TreeNode UndirectedGraphNode]))
 
 (deftest test-sort-colors
   (are [xs ys] (= ys (let [nums (int-array xs)]
@@ -399,3 +399,10 @@
       Integer/MAX_VALUE 31
       Integer/MIN_VALUE 1
        ))
+
+;; FIX: how to transform graph to and from clojure data structure
+(deftest test-clone-graph
+  (is (nil? (LeetCode/cloneGraph nil)))
+  (is (= 42 (-> (UndirectedGraphNode. 42)
+                LeetCode/cloneGraph
+                .label))))
