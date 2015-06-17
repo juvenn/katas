@@ -631,4 +631,34 @@ public class LeetCode {
         }
         return root;
     }
+
+    /**
+     * Rectangle area
+     **/
+    public static int computeArea(int A, int B, int C, int D,
+                                  int E, int F, int G, int H) {
+        int area = (D - B) * (C - A) + (G - E) * (H - F);
+        int dx   = crossLength(A, C, E, G);
+        if (dx <= 0) return area;
+        int dy   = crossLength(B, D, F, H);
+        if (dy <= 0) return area;
+        return area - dx * dy;
+    }
+
+    /**
+     * Cross length of two lines
+     * Given end points of two lines, compute length of crossed line,
+     * assume points are given in increasing order.
+     **/
+    private static int crossLength(int A1, int A2, int B1, int B2) {
+        if (B1 < A1) {
+            if      (B2 <= A1) return 0;
+            else if (B2 >= A2) return A2 - A1;
+            else               return B2 - A1;
+        } else {
+            if      (B1 >= A2) return 0;
+            else if (B2 <= A2) return B2 - B1;
+            else               return A2 - B1;
+        }
+    }
 }

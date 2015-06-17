@@ -406,3 +406,20 @@
   (is (= 42 (-> (UndirectedGraphNode. 42)
                 LeetCode/cloneGraph
                 .label))))
+
+(defn compute-area
+  "Wrapper for java computeArea"
+  [a b c d e f g h]
+  (LeetCode/computeArea a b c d e f g h))
+
+(deftest test-compute-area
+  (are [xs area] (= area (apply compute-area xs))
+       [0 0 5 4
+        3 -2 6 3] 29
+       [0 0 5 4
+        3 -2 6 0] 26
+       [0 0 5 4
+        3 -2 5 3] 24
+        [-1500000001 0 -1500000000 1
+         1500000000 0 1500000001 1] 2
+        ))
