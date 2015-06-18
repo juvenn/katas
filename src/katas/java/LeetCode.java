@@ -661,4 +661,44 @@ public class LeetCode {
             else               return A2 - B1;
         }
     }
+
+    /**
+     * Find first missing positive integer
+     * Given an unsorted array of integers, find the first missing positive
+     * integer.
+     **/
+    public static int findFirstMissingPositive(int[] nums) {
+        // move the non-positive to right using the quick sort method
+        int lo = 0;
+        int hi = nums.length - 1;
+        while (lo <= hi) {
+            if (nums[lo] > 0) lo++;
+            else if (nums[hi] <= 0) hi--;
+            else {
+                int tmp = nums[lo];
+                nums[lo++] = nums[hi];
+                nums[hi--] = tmp;
+            }
+        }
+        if (lo == 0) return 1;
+
+        // all positive are left now, it ends at lo - 1;
+        int length = lo;
+        // traverse positives and mark i-th element as negative if i
+        // appeared in array
+        for (int i=0; i < length; i++) {
+            int index = Math.abs(nums[i]) - 1;
+            if (index < length && nums[index] > 0)
+                nums[index] = - nums[index];
+        }
+        for (int i=0; i < length; i++) {
+            if (nums[i] > 0) return i+1;
+        }
+        return length + 1;
+
+        /** Hint
+         *  This solution mark the appeared element as negative, there's
+         *  another solution: move element to its value index.
+         **/
+    }
 }

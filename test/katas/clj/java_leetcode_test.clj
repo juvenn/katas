@@ -423,3 +423,14 @@
         [-1500000001 0 -1500000000 1
          1500000000 0 1500000001 1] 2
         ))
+
+(deftest test-find-first-missing-positive
+  (are [xs min] (= min (-> xs int-array
+                           LeetCode/findFirstMissingPositive))
+       [0] 1
+       [1] 2
+       [2] 1
+       [1 2 0] 3
+       [3 4 -1 1] 2
+       [2 4 6 8 5 3 1] 7
+       (range 1 100) 100))
