@@ -434,3 +434,30 @@
        [3 4 -1 1] 2
        [2 4 6 8 5 3 1] 7
        (range 1 100) 100))
+
+(deftest test-atoi
+  (testing "valid number"
+    (are [s n] (= n (LeetCode/myAtoi s))
+         "0" 0
+         "42" 42
+         "+42" 42
+         "001" 1
+         "-001" -1
+         "402" 402
+         "2147483647" 2147483647
+         "-2147483648" -2147483648
+         ))
+  (testing "invalid number"
+    (are [s n] (= n (LeetCode/myAtoi s))
+         "" 0
+         "2h4" 2
+         "2-4" 2
+         "2 4" 2))
+  (testing "integer overflow"
+    (are [s n] (= n (LeetCode/myAtoi s))
+         "2147483648" 2147483647
+         "-2147483649" -2147483648
+         "9999999999" 2147483647
+         ))
+  )
+

@@ -701,4 +701,36 @@ public class LeetCode {
          *  another solution: move element to its value index.
          **/
     }
+
+    /**
+     * String to integer (atoi)
+     *
+     **/
+    public static int myAtoi(String str) {
+        int lo = 0;
+        while (lo < str.length() && Character.isWhitespace(str.charAt(lo)))
+            lo++;
+        boolean pos = true; // positive or negative
+        if      (lo >= str.length())    return 0; // no digit at all
+        if      (str.charAt(lo) == '+') lo++;
+        else if (str.charAt(lo) == '-') {
+            pos = false;
+            lo++;
+        }
+
+        // Note: MAX_INT will overflow to MIN_INT
+        int num = 0;
+        for (int i=lo; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') return pos ? num : -num;
+            int d = c - '0';
+
+            // detecting overflow
+            if (num > 214748364 || (num == 214748364 && d >= 8))
+                return pos ? 2147483647 : -2147483648;
+            num = num * 10 + d;
+        }
+
+        return pos ? num : -num;
+    }
 }
