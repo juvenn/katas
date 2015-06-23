@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LeetCode {
     /**
@@ -732,5 +734,29 @@ public class LeetCode {
         }
 
         return pos ? num : -num;
+    }
+
+    /**
+     * Repeated DNA Sequences
+     *
+     * Find all the 10-letter-long sequences that occur more than once
+     * in a DNA molecule.
+     **/
+    public static List<String> findRepeatedDnaSequences(String s) {
+        int N = s.length();
+        int k = 10;
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        for (int i=0; i <= N-k; i++) {
+            String sub = s.substring(i, i+k);
+            int    cnt = map.getOrDefault(sub, 0);
+            map.put(sub, cnt+1);
+        }
+        ArrayList<String> list = new ArrayList<String>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            int    cnt = entry.getValue();
+            if (cnt > 1) list.add(key);
+        }
+        return list;
     }
 }

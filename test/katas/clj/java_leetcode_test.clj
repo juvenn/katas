@@ -461,3 +461,8 @@
          ))
   )
 
+(deftest test-find-repeated-dna-sequences
+  (are [s xs] (= xs (LeetCode/findRepeatedDnaSequences s))
+       "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT" ["AAAAACCCCC" "CCCCCAAAAA"]
+       ))
+
