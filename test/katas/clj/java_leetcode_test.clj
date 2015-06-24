@@ -466,3 +466,13 @@
        "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT" ["AAAAACCCCC" "CCCCCAAAAA"]
        ))
 
+(deftest test-reverse-bits
+  (are [a b] (= b (LeetCode/reverseBits a))
+       0 0
+       1 -2147483648
+       2 1073741824
+       2147483647 -2
+       -2147483648 1
+       -1 -1
+       ))
+

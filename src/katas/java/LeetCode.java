@@ -759,4 +759,29 @@ public class LeetCode {
         }
         return list;
     }
+
+    /**
+     * Reverse bits of a given 32 bits unsigned integer.
+     *
+     * For example, given input 43261596 (represented in binary as
+     * 00000010100101000001111010011100), return 964176192
+     * (represented in binary as 00111001011110000010100101000000).
+     */
+    public static int reverseBits(int n) {
+        // you need treat n as an unsigned value
+
+        // Drop the last bit and reverse the left 31 bits at first,
+        // then make offset according to last bit.
+        int quot;
+        if (n >= 0) quot = n / 2;
+        else        quot = (n + 1 + 2147483647) / 2 + 1073741824;
+        int acc = 0;
+        for (int i=0; i < 31; i++) {
+            acc = acc * 2 + quot % 2;
+            quot /= 2;
+        }
+        if (n % 2 != 0) acc += -2147483648;
+        return acc;
+    }
+
 }
