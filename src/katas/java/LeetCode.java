@@ -784,4 +784,102 @@ public class LeetCode {
         return acc;
     }
 
+    /**
+     * Basic Calculator
+     * 
+     * Implement a basic calculator to evaluate a simple expression
+     * string.  The expression string may contain open ( and closing
+     * parentheses ), the plus + or minus sign -, non-negative
+     * integers and empty spaces. You may assume that the given
+     * expression is always valid.
+     * Some examples:
+     *
+     *     "1 + 1" = 2
+     *     " 2-1 + 2 " = 3
+     *     "(1+(4+5+2)-3)+(6+8)" = 23
+     **/
+    public static int calculate(String s) {
+        // stack to keep both operand and operator
+        Stack<Integer> st = new Stack<Integer>();
+        int number = 0;
+        int  accum = 0; // accumulator
+        int   sign = 1; // previous sign
+        for (int i=0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                number = number * 10 + c - '0';
+            } else if (c == '+' || c == '-') {
+                accum += sign * number;
+                number = 0;
+                sign   = (c == '+') ? 1 : -1;
+            } else if (c == '(') {
+                st.push(accum);
+                st.push(sign);
+                sign  = 1;
+                accum = 0;
+            } else if (c == ')') {
+                accum += sign * number;
+                accum *= st.pop();      // sign before the corresponding '('
+                accum += st.pop();      // accumulator before '('
+                number = 0;
+                sign   = 1;
+            }
+        }
+        if (number != 0) accum += sign * number;
+        return accum;
+        // hint another solution: (1+(4+5+2)-3)+(8+6) =>
+        // sum += 1 + 4 + 5 + 2 + (-3) + 8 + 6
+    }
+
+    public static int calculate2(String s) {
+        Stack<Integer>   opr = new Stack<Integer>();   // operands
+        Stack<Character> ops = new Stack<Character>(); // operators
+
+        for (int i=0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                // accumulate consecutive digits as number
+                int accum = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    accum = accum * 10 + (s.charAt(i) - '0');
+                    i++;
+                }
+
+                if (!ops.isEmpty() && !opr.isEmpty()) {
+                    char op = ops.pop();
+                    int   a = opr.pop();
+                    if      (op == '+') accum = a + accum;
+                    else if (op == '-') accum = a - accum;
+                    else {
+                        opr.push(a);
+                        ops.push('(');
+                    }
+                }
+                opr.push(accum);
+            }
+            if (i >= s.length()) break;
+            char c = s.charAt(i);
+            switch (c) {
+            case '+': ops.push(c); break;
+            case '-': ops.push(c); break;
+            case '(': ops.push(c); break;
+            case ')':
+                ops.pop(); // drop the corresponding `(`
+                int accum = opr.pop();
+                if (!ops.isEmpty() && !opr.isEmpty()) {
+                    char op = ops.pop();
+                    int   a = opr.pop();
+                    if      (op == '+') accum = a + accum;
+                    else if (op == '-') accum = a - accum;
+                    else {
+                        opr.push(a);
+                        ops.push('(');
+                    }
+                }
+                opr.push(accum);
+                break;
+            }
+        }
+        assert (ops.isEmpty());
+        return opr.isEmpty() ? 0 : opr.pop();
+    }
 }
