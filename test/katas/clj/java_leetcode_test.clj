@@ -489,3 +489,10 @@
        "(1 + (2 + (3 + (4 + (5+ 6)))))" 21
        ))
 
+(deftest test-remove-duplicates
+  (are [xs n] (= n (LeetCode/removeDuplicates (int-array xs)))
+       [] 0
+       [1] 1
+       [1 2 2] 2
+       [1 1 1 2 2 2] 2
+       [1 3 3 3 3 5 7 7 7 11] 5))
