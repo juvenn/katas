@@ -899,4 +899,29 @@ public class LeetCode {
                 nums[++hi] = nums[i];
         return hi + 1;
     }
+
+    /**
+     * House Robber
+     *
+     * You are a professional robber planning to rob houses along a
+     * street. Each house has a certain amount of money stashed, the
+     * only constraint stopping you from robbing each of them is that
+     * adjacent houses have security system connected and it will
+     * automatically contact the police if two adjacent houses were
+     * broken into on the same night.
+     *
+     * Given a list of non-negative integers representing the amount
+     * of money of each house, determine the maximum amount of money
+     * you can rob tonight without alerting the police.
+     **/
+    public static int rob(int[] nums) {
+        if (nums.length == 0) return 0;
+        int[] accum = new int[nums.length + 3];
+        for (int i=nums.length-1; i >= 0; i--) {
+            int a = nums[i] + accum[i+2];
+            int b = nums[i] + accum[i+3];
+            accum[i] = a >= b ? a : b;
+        }
+        return (accum[0] >= accum[1]) ? accum[0] : accum[1];
+    }
 }

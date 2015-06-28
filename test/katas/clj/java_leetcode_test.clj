@@ -496,3 +496,13 @@
        [1 2 2] 2
        [1 1 1 2 2 2] 2
        [1 3 3 3 3 5 7 7 7 11] 5))
+
+(deftest test-house-robber
+  (are [xs sum] (= sum (LeetCode/rob (int-array xs)))
+       [42] 42
+       [1 2] 2
+       [1 2 3] 4
+       [1 3 2] 3
+       [1 100 2] 100
+       [1 2 100 101] 103
+       ))
