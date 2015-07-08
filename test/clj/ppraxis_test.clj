@@ -1,11 +1,11 @@
-(ns katas.clj.ppraxis-test
+(ns ppraxis-test
   "Test for programmingpraxis.com exercises."
   (:require [clojure.test :refer :all]
             [clojure.test.check :as tc]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
-            [katas.clj.ppraxis :as pprax]))
+            [ppraxis :as pprax]))
 
 (deftest test-ordered-cartesian-coords
   (testing "it generates pairs for simple cases"

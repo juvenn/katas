@@ -1,6 +1,6 @@
 (ns
   ^{:doc "Solutions to the book Cracking the Coding Interview"}
-  katas.clj.ctci)
+  ctci)
 
 (defn chars-unique?
   "Test if characters in string are unique."

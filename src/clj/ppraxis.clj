@@ -1,4 +1,4 @@
-(ns katas.clj.ppraxis
+(ns ppraxis
   "Exercises from programmingpraxis.com")
 
 (defn cartesian-product

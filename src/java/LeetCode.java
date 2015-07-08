@@ -3,7 +3,8 @@
  *
  * Tests are in Clojure and put in the module `katas.clj.java-ctci-test`.
  **/
-package katas.java;
+package katas;
+
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.LinkedList;

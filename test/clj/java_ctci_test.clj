@@ -1,7 +1,7 @@
-(ns katas.clj.java-ctci-test
+(ns java-ctci-test
   "Testing java CTCI using clojure"
   (:require [clojure.test :refer :all]
-            [katas.clj.ctci :as ctci])
+            [ctci :as ctci])
   (:import [katas.java CTCI LinkedListNode]
             ))
 

@@ -1,6 +1,6 @@
-(ns katas.clj.ctci-test
+(ns ctci-test
   (:require [clojure.test :refer :all]
-            [katas.clj.ctci :as ctci]))
+            [ctci :as ctci]))
 
 (deftest test-chars-unique?
   (testing "it should return true on empty string"

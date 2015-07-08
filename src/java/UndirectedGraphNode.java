@@ -1,4 +1,5 @@
-package katas.java;
+package katas;
+
 import java.util.ArrayList;
 
 public class UndirectedGraphNode {

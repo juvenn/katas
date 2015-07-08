@@ -1,7 +1,7 @@
-(ns katas.clj.java-leetcode-test
+(ns java-leetcode-test
   "Testing Leetcode java solutions using clojure"
   (:require [clojure.test :refer :all])
-  (:import [katas.java LeetCode ListNode TreeNode UndirectedGraphNode]))
+  (:import [katas LeetCode ListNode TreeNode UndirectedGraphNode]))
 
 (deftest test-sort-colors
   (are [xs ys] (= ys (let [nums (int-array xs)]

@@ -1,5 +1,6 @@
 
-package katas.java;
+package katas;
+
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
