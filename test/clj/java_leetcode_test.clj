@@ -506,3 +506,9 @@
        [1 100 2] 100
        [1 2 100 101] 103
        ))
+
+(deftest test-zigzag-level-order-traversal
+  (are [xs res] (= res (LeetCode/zigzagLevelOrderTraversal (tree xs)))
+       [3] [[3]]
+       [3 [9 20]] [[3] [20 9]]
+       [3 [9 20 [15 7]]] [[3] [20 9] [15 7]]))

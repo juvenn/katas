@@ -925,4 +925,40 @@ public class LeetCode {
         }
         return (accum[0] >= accum[1]) ? accum[0] : accum[1];
     }
+
+    /** Zigzag level order traversal
+     *
+     * Given a binary tree, return the zigzag level order traversal of
+     * its nodes' values. (ie, from left to right, then right to left
+     * for the next level and alternate between).
+     */
+    public static List<List<Integer>> zigzagLevelOrderTraversal(TreeNode root) {
+        ArrayList<List<Integer>> result =
+            new ArrayList<List<Integer>>();
+        Stack<TreeNode> currentLevel = new Stack<TreeNode>();
+        Stack<TreeNode>    nextLevel = new Stack<TreeNode>();
+        ArrayList<Integer>      list = new ArrayList<Integer>();
+        boolean              toRight = false;
+        if (root != null) currentLevel.push(root);
+        while (!currentLevel.isEmpty()) {
+            TreeNode x = currentLevel.pop();
+            list.add(x.val);
+            if (toRight) {
+                if (x.right != null) nextLevel.push(x.right);
+                if (x.left  != null) nextLevel.push(x.left);
+            } else {
+                if (x.left  != null) nextLevel.push(x.left);
+                if (x.right != null) nextLevel.push(x.right);
+            }
+
+            if (currentLevel.isEmpty()) {
+                result.add((List) list);
+                list         = new ArrayList<Integer>();
+                toRight      = !toRight;    // toggle direction
+                currentLevel = nextLevel;   // start next level
+                nextLevel    = new Stack<TreeNode>();
+            }
+        }
+        return result;
+    }
 }
