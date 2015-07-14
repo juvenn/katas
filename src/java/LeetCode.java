@@ -933,11 +933,10 @@ public class LeetCode {
      * for the next level and alternate between).
      */
     public static List<List<Integer>> zigzagLevelOrderTraversal(TreeNode root) {
-        ArrayList<List<Integer>> result =
-            new ArrayList<List<Integer>>();
+        List<List<Integer>>   result = new ArrayList<>();
         Stack<TreeNode> currentLevel = new Stack<TreeNode>();
         Stack<TreeNode>    nextLevel = new Stack<TreeNode>();
-        ArrayList<Integer>      list = new ArrayList<Integer>();
+        List<Integer>           list = new ArrayList<Integer>();
         boolean              toRight = false;
         if (root != null) currentLevel.push(root);
         while (!currentLevel.isEmpty()) {
@@ -952,7 +951,7 @@ public class LeetCode {
             }
 
             if (currentLevel.isEmpty()) {
-                result.add((List) list);
+                result.add(list);
                 list         = new ArrayList<Integer>();
                 toRight      = !toRight;    // toggle direction
                 currentLevel = nextLevel;   // start next level
@@ -960,5 +959,7 @@ public class LeetCode {
             }
         }
         return result;
+
+        // Hint: there is a DFS solution.
     }
 }
