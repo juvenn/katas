@@ -12,6 +12,7 @@ import java.util.Stack;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashSet;
 
 public class LeetCode {
     /**
@@ -974,5 +975,17 @@ public class LeetCode {
             cnt += (n / m + 8) / 10 * m + (n / m % 10 == 1 ? (n % m + 1) : 0);
         }
         return cnt;
+    }
+
+    /**
+     * Contains duplicate
+     */
+    public static boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        for (int i=0; i < nums.length; i++) {
+            if (set.contains(nums[i])) return true;
+            set.add(nums[i]);
+        }
+        return false;
     }
 }
