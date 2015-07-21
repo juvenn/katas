@@ -512,3 +512,14 @@
        [3] [[3]]
        [3 [9 20]] [[3] [20 9]]
        [3 [9 20 [15 7]]] [[3] [20 9] [15 7]]))
+
+(deftest test-count-digit-one
+  (are [n cnt] (= cnt (LeetCode/countDigitOne n))
+       0 0
+       1 1
+       9 1
+       10 2
+       11 4
+       13 6
+       23 13
+       ))

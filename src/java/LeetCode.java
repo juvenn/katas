@@ -962,4 +962,17 @@ public class LeetCode {
 
         // Hint: there is a DFS solution.
     }
+
+    /** Number of digit one
+     *
+     * Given an integer n, count the total number of digit 1 appearing
+     * in all non-negative integers less than or equal to n.
+     */
+    public static int countDigitOne(int n) {
+        int cnt = 0;
+        for (long m=1; m <= n; m *= 10) {
+            cnt += (n / m + 8) / 10 * m + (n / m % 10 == 1 ? (n % m + 1) : 0);
+        }
+        return cnt;
+    }
 }
